@@ -11,7 +11,7 @@ Last modified Date: 01-07-2020
     This script can change certain settings in Teams and serves as a simply way of doing central management
 
 .DESCRIPTION
-    With this script you are able to either enable or disable the following options:
+    With this script you are able to either enable or disable the following settings:
     
     Auto-Start application
     Open application in background
@@ -48,6 +48,7 @@ param(
      [boolean]$RegisterAsIMProvider,
      [boolean]$RunningOnClose
       )
+
 function Configure-TeamsSettings
     {
         # Get the contents of AppData\Microsoft\Teams\desktop-config.json
