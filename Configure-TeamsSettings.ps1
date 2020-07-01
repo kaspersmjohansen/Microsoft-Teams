@@ -1,6 +1,48 @@
-﻿
+﻿#Requires -Version 3.0
+<#
+*********************************************************************************************************************
+Name:               Configure-TeamsSettings
+Author:             Kasper Johansen
+Website:            https://virtualwarlock.net
+Version             1.0
+Last modified Date: 01-07-2020
+
+.SYNOPSIS
+    This script can change certain settings in Teams and serves as a simply way of doing central management
+
+.DESCRIPTION
+    With this script you are able to either enable or disable the following options:
+    
+    Auto-Start application
+    Open application in background
+    On close, keep the application running
+    Disable GPO hardware acceleration
+    Register Teams as the caht app for Office
+
+    Microsoft does not provide any central management of Teams, however they may be certain scenarioes where central
+    management is needed ie. to disable GPU hardware acceleration when running Teams in a Session Host/VDI session
+    with no GPU present.
+
+.PARAMETER DisableGPU
+Disable GPU hardware acceleration in Teams
+
+.PARAMETER OpenAsHidden
+Opens Teams in the background
+
+.PARAMETER OpenAtLogin
+Auto-starts Teams at logon. The feature is only available in the Teams per-user install!
+
+.PARAMETER RegisterAsIMProvider
+Registers Teams as the default chat app in Office. Which means that if you hover a user/mail address in Outlook and click the messaging button, Teams will start instead of Skype 4B.
+
+.PARAMETER RunningOnClose
+Keeps Teams running on the background when closing the app.
+
+
+#>
 param(
      # can be either $true or $false
+     [ValidateSet("true","false")]
      [boolean]$DisableGPU,
      [boolean]$OpenAsHidden,
      [boolean]$OpenAtLogin,
@@ -22,11 +64,32 @@ function Configure-TeamsSettings
             }
 
             # Configure open application in background ($OpenAsHidden)
+            If ($OpenAsHidden)
+            { 
+                $DesktopConfig.appPreferenceSettings.openAsHidden=$OpenAsHidden
+            }
+
             # Configure auto-start application ($OpenAtLogin)
+            If ($OpenAtLogin)
+            { 
+                $DesktopConfig.appPreferenceSettings.openAtLogin=$OpenAtLogin
+            }
+
             # Configure register Teams as the chat app for Office ($RegisterAsIMProvider)
+            If ($RegisterAsIMProvider)
+            { 
+                $DesktopConfig.appPreferenceSettings.registerAsIMProvider=$RegisterAsIMProvider
+            }
+
             # Configure on close, keep the application running ($RunningOnClose)
+            If ($RunningOnClose)
+            { 
+                $DesktopConfig.appPreferenceSettings.runningOnClose=$RunningOnClose
+            }
 
 # Write changes to the config file
-$DesktopConfig | ConvertTo-Json | Set-Content "$TeamsConfigFolder\$TeamsConfigFile"
+$DesktopConfig | ConvertTo-Json | Set-Content "$ConfigFolder\$ConfigFile"
 
     }
+
+Configure-TeamsSettings $DisableGPU $OpenAsHidden $OpenAtLogin $RegisterAsIMProvider $RunningOnClose
