@@ -17,11 +17,11 @@ Last modified Date: 01-07-2020
     Open application in background
     On close, keep the application running
     Disable GPO hardware acceleration
-    Register Teams as the caht app for Office
+    Register Teams as the chat app for Office
 
-    Microsoft does not provide any central management of Teams, however they may be certain scenarioes where central
-    management is needed ie. to disable GPU hardware acceleration when running Teams in a Session Host/VDI session
-    with no GPU present.
+    Microsoft does not provide any central management of Teams, at least not via the traditional ways of group policy.
+    However they may be certain scenarioes where central management is needed ie. to disable GPU hardware acceleration
+    when running Teams in a remote session with no GPU present.
 
 .PARAMETER DisableGPU
 Disable GPU hardware acceleration in Teams
