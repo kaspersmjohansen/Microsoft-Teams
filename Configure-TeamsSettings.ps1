@@ -41,8 +41,7 @@ Keeps Teams running on the background when closing the app.
 
 #>
 param(
-     # can be either $true or $false
-     [ValidateSet("true","false")]
+     # must be either $true or $false
      [boolean]$DisableGPU,
      [boolean]$OpenAsHidden,
      [boolean]$OpenAtLogin,
