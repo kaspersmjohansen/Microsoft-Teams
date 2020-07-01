@@ -47,7 +47,6 @@ param(
      [boolean]$OpenAtLogin,
      [boolean]$RegisterAsIMProvider,
      [boolean]$RunningOnClose
-
       )
 function Configure-TeamsSettings
     {
