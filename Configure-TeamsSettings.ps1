@@ -4,8 +4,7 @@
 Name:               Configure-TeamsSettings
 Author:             Kasper Johansen
 Website:            https://virtualwarlock.net
-Version             1.0
-Last modified Date: 01-07-2020
+Last modified Date: 17-11-2020
 
 .SYNOPSIS
     This script can change certain settings in Teams and serves as a simply way of doing central management
@@ -13,7 +12,6 @@ Last modified Date: 01-07-2020
 .DESCRIPTION
     With this script you are able to either enable or disable the following settings:
     
-    Auto-Start application
     Open application in background
     On close, keep the application running
     Disable GPO hardware acceleration
@@ -54,8 +52,16 @@ function Configure-TeamsSettings
         # Get the contents of AppData\Microsoft\Teams\desktop-config.json
         $ConfigFolder = "$env:APPDATA\Microsoft\Teams"
         $ConfigFile = "desktop-config.json"
-        $DesktopConfig = Get-Content "$ConfigFolder\$ConfigFile" -raw | ConvertFrom-Json
+        $TeamsDesktopConfig = Get-Content -Path "$ConfigFolder\$ConfigFile"
+        $DesktopConfig = ConvertFrom-Json -InputObject $TeamsDesktopConfig
 
+        $DesktopConfig.appPreferenceSettings.disableGPU=$DisableGPU
+        $DesktopConfig.appPreferenceSettings.openAsHidden=$OpenAsHidden
+        $DesktopConfig.appPreferenceSettings.openAtLogin=$OpenAtLogin
+        $DesktopConfig.appPreferenceSettings.runningOnClose=$RunningOnClose
+        $DesktopConfig.appPreferenceSettings.registerAsIMProvider=$RegisterAsIMProvider
+
+        <#
             # Configure disable GPU hardware acceleration ($DisableGPU)
             If ($DisableGPU)
             { 
@@ -85,9 +91,16 @@ function Configure-TeamsSettings
             { 
                 $DesktopConfig.appPreferenceSettings.runningOnClose=$RunningOnClose
             }
+        #>
+
+# Make sure Teams is not running
+Get-Process Teams -ErrorAction SilentlyContinue | Stop-Process -Force
+
+# Convert Object back to JSON format
+$NewDesktopConfig = $DesktopConfig | ConvertTo-Json
 
 # Write changes to the config file
-$DesktopConfig | ConvertTo-Json | Set-Content "$ConfigFolder\$ConfigFile"
+$NewDesktopConfig | Set-Content "$ConfigFolder\$ConfigFile"
 
     }
 
