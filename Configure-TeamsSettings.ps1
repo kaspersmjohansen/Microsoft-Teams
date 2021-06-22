@@ -9,8 +9,11 @@ Last modified Date: 17-11-2020
 .SYNOPSIS
     This script can change certain settings in Teams and serves as a simply way of doing central management
 
+    Original script can be found here:
+    https://devblogs.microsoft.com/scripting/configuring_startup_settings_in_microsoft_teams_with_windows_powershell/
+
 .DESCRIPTION
-    With this script you are able to either enable or disable the following settings:
+    With this script you are able to enable or disable the following settings:
     
     Open application in background
     On close, keep the application running
