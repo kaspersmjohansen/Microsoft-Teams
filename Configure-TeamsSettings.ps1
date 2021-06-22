@@ -4,7 +4,7 @@
 Name:               Configure-TeamsSettings
 Author:             Kasper Johansen
 Website:            https://virtualwarlock.net
-Last modified Date: 17-11-2020
+Last modified Date: 22-06-2021
 
 .SYNOPSIS
     This script can change certain settings in Teams and serves as a simply way of doing central management
